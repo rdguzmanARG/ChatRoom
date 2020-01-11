@@ -18,7 +18,7 @@
                 </div>
             </div>
         </div>
-        <table class="table">
+        <table class="table table-striped">
             <thead class="thead-dark">
                 <tr>
                     <th scope="col" colspan="3">ChatRoom - Channel</th>
@@ -28,9 +28,9 @@
                 @foreach (Chat chat in Model)
                 {
                     <tr>
-                        <td>@chat.Date.ToString("MM/dd/yyyy H:mm")</td>
-                        <td>@chat.UserName</td>
-                        <td>@chat.Message</td>
+                        <td class="date-col">@chat.Date.ToString("MM/dd/yyyy H:mm")</td>
+                        <td class="user-col">@chat.UserName</td>
+                        <td class="message-col">@chat.Message</td>
                     </tr>
                 }
             </tbody>

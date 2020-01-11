@@ -13,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using ChatRoom.Handlers;
+using ChatRoom.Models;
 
 namespace ChatRoom
 {
@@ -31,15 +32,17 @@ namespace ChatRoom
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+            services.AddDefaultIdentity<IdentityUser>()
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders();
+
             services.AddControllersWithViews();
             services.AddRazorPages();
             services.AddSignalR();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ApplicationDbContext context, IServiceProvider serviceProvider)
         {
             if (env.IsDevelopment())
             {
@@ -68,6 +71,35 @@ namespace ChatRoom
                 endpoints.MapRazorPages();
                 endpoints.MapHub<ChatHub>("/chatHub");
             });
+
+            DBInitializer.Initialize(context);
+            CreateUsers(serviceProvider);
+        }
+        private void CreateUsers(IServiceProvider serviceProvider)
+        {
+            CreateUser("User1", "user1@sample.com", "User 1.", serviceProvider).Wait();
+            CreateUser("User2", "user2@sample.com", "User 2.", serviceProvider).Wait();
+            CreateUser("User3", "user3@sample.com", "User 3.", serviceProvider).Wait();
+        }
+        private async Task CreateUser(string userNAme, string email, string psw, IServiceProvider serviceProvider)
+        {
+            //initializing custom roles 
+            var UserManager = serviceProvider.GetRequiredService<UserManager<IdentityUser>>();
+
+            //Here you could create a super user who will maintain the web app
+            var poweruser = new IdentityUser
+            {
+                UserName = userNAme,
+                Email = email,
+            };
+            //Ensure you have these values in your appsettings.json file
+            string userPWD = psw;
+            var _user = await UserManager.FindByEmailAsync(email);
+
+            if (_user == null)
+            {
+                var createPowerUser = await UserManager.CreateAsync(poweruser, userPWD);
+            }
         }
     }
 }
