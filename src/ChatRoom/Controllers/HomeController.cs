@@ -26,7 +26,7 @@ namespace ChatRoom.Controllers
 
         public IActionResult Index()
         {
-            Chat[] chats = _context.Chat.OrderByDescending(d=>d.Date).ToArray();
+            Chat[] chats = _context.Chat.OrderByDescending(d=>d.Date).Take(50).ToArray();
 
             return View(chats);
         }
