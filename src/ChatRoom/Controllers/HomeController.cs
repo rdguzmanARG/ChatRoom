@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using ChatRoom.Models;
 using Microsoft.AspNetCore.Authorization;
+using ChatRoom.Data;
+using ChatRoom.Entities;
 
 namespace ChatRoom.Controllers
 {
@@ -14,15 +16,19 @@ namespace ChatRoom.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly ApplicationDbContext _context;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ApplicationDbContext context, ILogger<HomeController> logger)
         {
             _logger = logger;
+            _context = context;
         }
 
         public IActionResult Index()
         {
-            return View();
+            Chat[] chats = _context.Chat.OrderByDescending(d=>d.Date).ToArray();
+
+            return View(chats);
         }
 
         public IActionResult Privacy()

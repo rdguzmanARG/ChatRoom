@@ -1,4 +1,6 @@
-﻿@{
+﻿@model IEnumerable<ChatRoom.Entities.Chat>
+@using ChatRoom.Entities;
+@{
     ViewData["Title"] = "Home Page";
 }
 
@@ -9,10 +11,10 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text">Message</span>
                 </div>
-                <input type="hidden" id="userInput" value="Ricky" />
-                <textarea class="form-control" aria-label="With textarea"  id="messageInput"></textarea>
+                <input type="hidden" id="userInput" value="@User.Identity.Name" />
+                <textarea class="form-control" aria-label="With textarea" id="messageInput"></textarea>
                 <div class="input-group-append">
-                    <button class="btn btn-outline-secondary" type="button"  id="sendButton">Send</button>
+                    <button class="btn btn-outline-secondary" type="button" id="sendButton">Send</button>
                 </div>
             </div>
         </div>
@@ -23,6 +25,14 @@
                 </tr>
             </thead>
             <tbody id="messagesList">
+                @foreach (Chat chat in Model)
+                {
+                    <tr>
+                        <td>@chat.Date.ToString("MM/dd/yyyy H:mm")</td>
+                        <td>@chat.UserName</td>
+                        <td>@chat.Message</td>
+                    </tr>
+                }
             </tbody>
         </table>
     </div>
