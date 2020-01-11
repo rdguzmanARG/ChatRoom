@@ -11,20 +11,29 @@ namespace ChatRoom.Handlers
     {
         public static string GetQuote(string stockCode)
         {
-            string url = string.Format("https://stooq.com/q/l/?s={0}&f=sd2t2ohlcv&h&e=csv", stockCode);
-            string[] results = GetCSV(url).Replace("\n", "").Split("\r");
-            int index = 0;
-            string[] cols = results[0].Split(",");
-            for (int i = 0; i < cols.Count(); i++)
+            try
             {
-                if (cols[i] == "Close")
+                // TODO: Add this url in the configuration.
+                string url = string.Format("https://stooq.com/q/l/?s={0}&f=sd2t2ohlcv&h&e=csv", stockCode);
+                string[] results = GetCSV(url).Replace("\n", "").Split("\r");
+                int index = 0;
+                string[] cols = results[0].Split(",");
+                for (int i = 0; i < cols.Count(); i++)
                 {
-                    index = i;
-                    break;
+                    if (cols[i] == "Close")
+                    {
+                        index = i;
+                        break;
+                    }
                 }
+                string value = results[1].Split(",")[index];
+                return string.Format("{0} quote is ${1} per share.", stockCode, value);
             }
-            string value = results[1].Split(",")[index];
-            return string.Format("{0} quote is ${1} per share.", stockCode, value);
+            catch
+            {
+                return "There was an error trying to get the Stock quotes.";
+            }
+       
         }
 
         public static string GetCSV(string url)

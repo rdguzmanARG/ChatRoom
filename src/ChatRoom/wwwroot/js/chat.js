@@ -24,6 +24,9 @@ connection.on("ReceiveMessage", function (user, message, date) {
     } else {
         list.appendChild(tr);
     }
+    if (list.children.length > 50) {
+        list.lastElementChild.remove();
+    }
 });
 
 connection.start().then(function () {
