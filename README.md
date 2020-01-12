@@ -15,7 +15,7 @@ Instructions to have the Demo up and running!!!
 #### 3. Open the appsettings.json file in the root folder, and configure the Connection String as needed
 **Note:** By default is using LocalDB for simplicity.
 
-#### 4. Run the website with Visual Studio, the browser will open the following url https://localhost:44366/ if you run the app withIISEXPRESS or https://localhost:5001/ if you run the app with dotnet command. 
+#### 4. Run the website with Visual Studio, the browser will open the following url https://localhost:44366/ if you run the app with IISEXPRESS or https://localhost:5001/ if you run the app with dotnet command. 
 **Note:** If you have any problem with this port number, you can change it in the launchSettings.json file, inside Properties.
 
 ## Regarding de ChatRoom
