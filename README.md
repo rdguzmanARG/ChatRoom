@@ -18,12 +18,17 @@ Instructions to have the Demo up and running!!!
 #### 4. Run the website with Visual Studio, the browser will open the following url https://localhost:5001/
 **Note:** If you have any problem with this port number, you can change it in the launchSettings.json file, inside Properties.
 
-## Regarding de App
+## Regarding de ChatRoom
 
-As an example, the DB is created with two users that can be used for the demo:
+#### 1. As an example, the DB is created with three users that can be used for the demo:
 
 **Username:** User1 
 **Password:** User 1.
 
 **Username:** User2 
 **Password:** User 2.
+
+**Username:** User3 
+**Password:** User 3.
+
+#### 2. The App follow all the requirements specified.
