@@ -20,4 +20,10 @@ Instructions to have the Demo up and running!!!
 
 ## Regarding de App
 
-As an example, the DB is created with two users that can be used for the demo.
+As an example, the DB is created with two users that can be used for the demo:
+
+**Username:** User1 
+**Password:** User 1.
+
+**Username:** User2 
+**Password:** User 2.
